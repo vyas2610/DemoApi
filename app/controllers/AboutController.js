@@ -49,7 +49,7 @@ async function update(req, res) {
 
     try {
         await prisma.category.update({
-            data: req.data,
+            data: req.body,
             where: {
                 id: req.params.id,
             },
