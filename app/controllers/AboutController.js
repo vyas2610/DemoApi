@@ -1,14 +1,25 @@
 const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
-function index(req, res) {
-    res.send({
-        msg: 'About Us Page is calling..!',
-        item: [{
-            title: 'Title',
-            des: 'Des'
-        }]
-    });
+BigInt.prototype.toJSON = function () {
+    const int = Number.parseInt(this.toString());
+    return int ?? this.toString();
+};
+
+async function index(req, res) {
+
+    try {
+        let response = await prisma.category.findMany()
+        res.send({
+            response
+
+        });
+
+    } catch (error) {
+        res.status(500).send({
+            error
+        })
+    }
 }
 
 async function create(req, res) {
@@ -34,16 +45,43 @@ async function create(req, res) {
     }
 }
 
-function update(req, res) {
-    res.send({
-        msg: "update is calling...!"
-    })
+async function update(req, res) {
+
+    try {
+        await prisma.category.update({
+            data: req.data,
+            where: {
+                id: req.params.id,
+            },
+        })
+        res.send({
+            msg: "Data updated",
+
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            error
+        })
+    }
 }
 
-function destroy(req, res) {
-    res.send({
-        msg: "Delete is calling...!"
-    })
+async function destroy(req, res) {
+    try {
+        await prisma.category.delete({
+            where: {
+                id: req.params.id,
+            },
+        })
+        res.send({
+            msg: "Delete is calling...!"
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            error
+        })
+    }
 }
 
 function show(req, res) {

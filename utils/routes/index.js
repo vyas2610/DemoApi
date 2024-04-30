@@ -18,9 +18,9 @@ function routes(app) {
 
     app.get('/about', AboutController.index) // for ferch data
     app.post('/about', AboutController.create) // for add new data
-    app.put('/about', AboutController.update) // update 
-    app.delete('/about', AboutController.destroy) // delete
-    app.get('/about:id', AboutController.show) // for fetch data of a index 
+    app.put('/about/:id', AboutController.update) // update 
+    app.delete('/about/:id', AboutController.destroy) // delete
+    app.get('/about/:id', AboutController.show) // for fetch data of a index 
 
 
 }
