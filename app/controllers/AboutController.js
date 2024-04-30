@@ -84,10 +84,25 @@ async function destroy(req, res) {
     }
 }
 
-function show(req, res) {
-    res.send({
-        msg: "Detail is calling...!"
-    })
+async function show(req, res) {
+
+    try {
+        let response = await prisma.category.findFirst({
+            where:
+            {
+                id: req.params.id
+            },
+        })
+        res.send({
+            msg: "Detail is calling...!",
+            response
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            error
+        })
+    }
 }
 module.exports = {
     index,
