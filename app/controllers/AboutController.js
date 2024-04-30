@@ -13,6 +13,7 @@ function index(req, res) {
 
 async function create(req, res) {
     let body = req.body;
+    console.log('body', body);
     try {
         await prisma.category.create({
             data: {
@@ -26,6 +27,7 @@ async function create(req, res) {
         });
     }
     catch (error) {
+        console.warn('error', error);
         res.status(500).send({
             error,
         });
